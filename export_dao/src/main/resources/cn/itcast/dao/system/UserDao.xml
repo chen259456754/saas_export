@@ -271,4 +271,10 @@
         where user_id = #{id}
     </delete>
 
+    <select id="findUserRoleByUserId" resultType="long">
+        select count(1)
+        from pe_role_user
+        where user_id = #{userId}
+    </select>
+
 </mapper>

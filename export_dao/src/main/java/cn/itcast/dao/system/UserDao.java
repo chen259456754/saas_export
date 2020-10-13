@@ -31,4 +31,9 @@ public interface UserDao {
      * 删除
      */
     void delete(String id);
+
+    /**
+     * 根据用户id查询用户角色中间表
+     */
+    Long findUserRoleByUserId(String id);
 }

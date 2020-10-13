@@ -9,10 +9,13 @@ import com.github.pagehelper.util.StringUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(path = "/system/user")
@@ -96,7 +99,7 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 删除用户
+     * 删除用户,异步请求返回结果给浏览器
      * <p>
      * 功能入口：在user-list.jsp 勾选用户后点击删除
      * 请求地址：http://localhost:8080/user/delete
@@ -104,8 +107,15 @@ public class UserController extends BaseController {
      * 响应地址：/system/user/list
      */
     @RequestMapping(path = "/delete")
-    public String delete(String id) {
-        userService.delete(id);
-        return "redirect:/system/user/list";
+    @ResponseBody
+    public Map<String, Object> delete(String id) {
+        Map<String, Object> map = new HashMap<>();
+        boolean flag = userService.delete(id);
+        if (flag) {
+            map.put("message", "删除成功");
+        } else {
+            map.put("message", "当前删除的记录被外键引用，删除失败");
+        }
+        return map;
     }
 }

@@ -23,7 +23,7 @@ public interface UserService {
     /**
      * 删除
      */
-    void delete(String id);
+    boolean delete(String id);
 
     /**
      * 根据id查询

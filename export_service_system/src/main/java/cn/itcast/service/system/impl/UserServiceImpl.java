@@ -53,8 +53,15 @@ public class UserServiceImpl implements UserService {
      * 删除
      */
     @Override
-    public void delete(String id) {
-        userDao.delete(id);
+    public boolean delete(String id) {
+        Long count =userDao.findUserRoleByUserId(id);
+        if (count!=null&&count>0){
+            return false;
+        }else {
+            userDao.delete(id);
+            return true;
+        }
+
     }
 
     /**
