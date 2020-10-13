@@ -87,10 +87,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${page.rows}" var="item">
+                    <c:forEach items="${pageInfo.list}" var="item" varStatus="vs">
                     <tr>
                         <td><input name="ids" value="${item.id}" type="checkbox"></td>
-                        <td>${status.index+1}</td>
+                        <td>${vs.count}</td>
                         <td><a href="/system/user/toUpdate.do?id=${o.id}">${item.userName}</a></td>
                         <td>${item.deptName }</td>
                         <td>${item.email }</td>

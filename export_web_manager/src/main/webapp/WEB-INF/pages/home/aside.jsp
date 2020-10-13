@@ -176,7 +176,7 @@
                      </a>
                  </li>
                  <li id="sys-user">
-                     <a href="/system/user/list.do" onclick="setSidebarActive(this)"  target="iframe">
+                     <a href="/system/user/list" onclick="setSidebarActive(this)"  target="iframe">
                          <i class="fa fa-circle-o"></i>用户管理
                      </a>
                  </li>

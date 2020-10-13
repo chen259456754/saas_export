@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itcast.dao.system.UserDao">
+
+    <resultMap type="cn.itcast.domain.system.User" id="BaseResultMap">
+        <id property="id" column="user_id" jdbcType="VARCHAR"/>
+        <result property="deptId" column="dept_id" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="station" column="station" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="NUMERIC"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="deptName" column="dept_name" jdbcType="VARCHAR"/>
+        <result property="managerId" column="manager_id" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender" jdbcType="VARCHAR"/>
+        <result property="telephone" column="telephone" jdbcType="VARCHAR"/>
+        <result property="birthday" column="birthday" jdbcType="VARCHAR"/>
+        <result property="degree" column="degree" jdbcType="INTEGER"/>
+        <result property="salary" column="salary" jdbcType="NUMERIC"/>
+        <result property="joinDate" column="join_date" jdbcType="VARCHAR"/>
+        <result property="orderNo" column="order_no" jdbcType="INTEGER"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createDempt" column="create_dempt" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!--查询所有-->
+    <select id="findAll" resultMap="BaseResultMap">
+        select *
+        from pe_user
+    </select>
+    <!--查询单个-->
+    <select id="findById" resultMap="BaseResultMap">
+        select user_id,
+               dept_id,
+               email,
+               user_name,
+               station,
+               password,
+               state,
+               company_id,
+               company_name,
+               dept_name,
+               manager_id,
+               gender,
+               telephone,
+               birthday,
+               degree,
+               salary,
+               join_date,
+               order_no,
+               create_by,
+               create_dempt,
+               create_time,
+               update_by,
+               update_time,
+               remark
+        from pe_user
+        where user_id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select user_id,
+               dept_id,
+               email,
+               user_name,
+               station,
+               password,
+               state,
+               company_id,
+               company_name,
+               dept_name,
+               manager_id,
+               gender,
+               telephone,
+               birthday,
+               degree,
+               salary,
+               join_date,
+               order_no,
+               create_by,
+               create_dempt,
+               create_time,
+               update_by,
+               update_time,
+               remark
+        from pe_user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+        user_id, dept_id, email, user_name, station, password, state, company_id, company_name, dept_name, manager_id,
+        gender, telephone, birthday, degree, salary, join_date, order_no, create_by, create_dempt, create_time,
+        update_by, update_time, remark
+        from pe_user
+        <where>
+            <if test="id != null and id != ''">
+                and user_id = #{id}
+            </if>
+            <if test="deptId != null and deptId != ''">
+                and dept_id = #{deptId}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="station != null and station != ''">
+                and station = #{station}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="state != null">
+                and state = #{state}
+            </if>
+            <if test="companyId != null and companyId != ''">
+                and company_id = #{companyId}
+            </if>
+            <if test="companyName != null and companyName != ''">
+                and company_name = #{companyName}
+            </if>
+            <if test="deptName != null and deptName != ''">
+                and dept_name = #{deptName}
+            </if>
+            <if test="managerId != null and managerId != ''">
+                and manager_id = #{managerId}
+            </if>
+            <if test="gender != null and gender != ''">
+                and gender = #{gender}
+            </if>
+            <if test="telephone != null and telephone != ''">
+                and telephone = #{telephone}
+            </if>
+            <if test="birthday != null and birthday != ''">
+                and birthday = #{birthday}
+            </if>
+            <if test="degree != null">
+                and degree = #{degree}
+            </if>
+            <if test="salary != null">
+                and salary = #{salary}
+            </if>
+            <if test="joinDate != null and joinDate != ''">
+                and join_date = #{joinDate}
+            </if>
+            <if test="orderNo != null">
+                and order_no = #{orderNo}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createDempt != null and createDempt != ''">
+                and create_dempt = #{createDempt}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="save">
+        insert into pe_user(user_id, dept_id, email, user_name, station, password, state, company_id, company_name,
+                            dept_name, manager_id, gender, telephone, birthday, degree, salary, join_date,
+                            order_no, create_by, create_dempt, create_time, update_by, update_time, remark)
+        values (#{id}, #{deptId}, #{email}, #{userName}, #{station}, #{password}, #{state}, #{companyId},
+                #{companyName}, #{deptName}, #{managerId}, #{gender}, #{telephone}, #{birthday}, #{degree}, #{salary},
+                #{joinDate}, #{orderNo}, #{createBy}, #{createDempt}, #{createTime}, #{updateBy}, #{updateTime},
+                #{remark})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update pe_user
+        <set>
+            <if test="deptId != null and deptId != ''">
+                dept_id = #{deptId},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="station != null and station != ''">
+                station = #{station},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
+            <if test="companyId != null and companyId != ''">
+                company_id = #{companyId},
+            </if>
+            <if test="companyName != null and companyName != ''">
+                company_name = #{companyName},
+            </if>
+            <if test="deptName != null and deptName != ''">
+                dept_name = #{deptName},
+            </if>
+            <if test="managerId != null and managerId != ''">
+                manager_id = #{managerId},
+            </if>
+            <if test="gender != null and gender != ''">
+                gender = #{gender},
+            </if>
+            <if test="telephone != null and telephone != ''">
+                telephone = #{telephone},
+            </if>
+            <if test="birthday != null and birthday != ''">
+                birthday = #{birthday},
+            </if>
+            <if test="degree != null">
+                degree = #{degree},
+            </if>
+            <if test="salary != null">
+                salary = #{salary},
+            </if>
+            <if test="joinDate != null and joinDate != ''">
+                join_date = #{joinDate},
+            </if>
+            <if test="orderNo != null">
+                order_no = #{orderNo},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createDempt != null and createDempt != ''">
+                create_dempt = #{createDempt},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+        </set>
+        where user_id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="delete">
+        delete
+        from pe_user
+        where user_id = #{id}
+    </delete>
+
+</mapper>

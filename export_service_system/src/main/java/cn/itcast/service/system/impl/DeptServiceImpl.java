@@ -69,13 +69,12 @@ public class DeptServiceImpl implements DeptService {
      * 删除部门
      * - 1） 先根据删除的部门是否有子部门，如果有子部门不能删除
      * -- 2） 如果有查询到数据，不能删除，给予提示
-
      */
     @Override
     public boolean delete(String id) {
         List<Dept> list = deptDao.findByParentId(id);
         //2） 如果有查询到数据，不能删除，给予提示
-        if (list != null && list.size()>0){
+        if (list != null && list.size() > 0) {
             // 查询到子部门，不能删除
             return false;
         } else {
