@@ -19,7 +19,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping(path = "/system/dept")
-public class DeptController {
+public class DeptController extends BaseController {
     @Resource
     private DeptService deptService;
 
@@ -31,7 +31,7 @@ public class DeptController {
             @RequestParam(defaultValue = "1") Integer pageNum,
             @RequestParam(defaultValue = "5") Integer pageSize) {
         //企业id从当前登录的用户中获取用户的企业，现模拟为1.
-        String companyId = "1";
+        String companyId = getLoginCompanyId();
         PageInfo<Dept> pageInfo = deptService.findByPage(companyId, pageNum, pageSize);
         ModelAndView mv = new ModelAndView();
         mv.addObject("pageInfo", pageInfo);
@@ -50,7 +50,7 @@ public class DeptController {
     @RequestMapping(path = "/toAdd")
     public String toAdd(Model model) {
         //企业id从当前登录的用户中获取用户的企业，现模拟为1.
-        String companyId = "1";
+        String companyId = getLoginCompanyId();
         //查询所有部门
         List<Dept> deptList = deptService.findAll(companyId);
         //保存
@@ -68,9 +68,11 @@ public class DeptController {
      */
     @RequestMapping(path = "/edit")
     public String edit(Dept dept) {
+        String companyId = getLoginCompanyId();
+        String name = getLoginCompanyName();
         //设置企业信息
-        dept.setCompanyId("1");
-        dept.setCompanyName("传智播客教育股份有限公司");
+        dept.setCompanyId(companyId);
+        dept.setCompanyName(name);
         //判断保存还是更新
         if (StringUtil.isEmpty(dept.getId())) {
             deptService.save(dept);
@@ -91,7 +93,7 @@ public class DeptController {
      */
     @RequestMapping(path = "/toUpdate")
     public String toUpdate(String id, Model model) {
-        String companyId = "1";
+        String companyId = getLoginCompanyId();
         //根据部门id查询
         Dept dept = deptService.findById(id);
         //查询所有部门
@@ -100,23 +102,24 @@ public class DeptController {
         model.addAttribute("dept", dept);
         return "system/dept/dept-update";
     }
+
     /**
      * 5. 删除
      * result = {"message":"删除成功！"}
      */
-    @RequestMapping(path = "/delete",method = RequestMethod.POST)
+    @RequestMapping(path = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,String> delete(String id){
+    public Map<String, String> delete(String id) {
         //1. 返回对象
-        Map<String,String> result = new HashMap<>();
+        Map<String, String> result = new HashMap<>();
         //2. 调用service删除
         boolean flag = deptService.delete(id);
         //3. 判断
         if (flag) {
             // 删除成功
-            result.put("message","删除成功!");
+            result.put("message", "删除成功!");
         } else {
-            result.put("message","删除失败：删除的部门有子部门，不能删除！");
+            result.put("message", "删除失败：删除的部门有子部门，不能删除！");
         }
         return result;
     }
