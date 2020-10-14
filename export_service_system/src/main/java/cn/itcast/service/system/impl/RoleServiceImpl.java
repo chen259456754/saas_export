@@ -86,4 +86,26 @@ public class RoleServiceImpl implements RoleService {
             }
         }
     }
+
+    /**
+     * 查询所有的角色
+     *
+     * @param companyId
+     * @return
+     */
+    @Override
+    public List<Role> findAll(String companyId) {
+        return roleDao.findAll(companyId);
+    }
+
+    /**
+     * 根据用户的id，查询用户拥有的角色
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<Role> findUserRole(String userId) {
+        return roleDao.findUserRole(userId);
+    }
 }

@@ -54,10 +54,10 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean delete(String id) {
-        Long count =userDao.findUserRoleByUserId(id);
-        if (count!=null&&count>0){
+        Long count = userDao.findUserRoleByUserId(id);
+        if (count != null && count > 0) {
             return false;
-        }else {
+        } else {
             userDao.delete(id);
             return true;
         }
@@ -72,5 +72,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(String id) {
         return userDao.findById(id);
+    }
+
+    /**
+     * 实现给用户分配角色
+     *
+     * @param userId
+     * @param roleIds
+     */
+    @Override
+    public void updateUserRoles(String userId, String[] roleIds) {
+        //根据userId删除中间表数据
+        userDao.deleteUserRole(userId);
+        //遍历roleIds中的roleId，想中间表中保存数据
+        for (String roleId : roleIds) {
+            userDao.saveUserRole(userId, roleId);
+        }
     }
 }

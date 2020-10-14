@@ -29,4 +29,12 @@ public interface UserService {
      * 根据id查询
      */
     User findById(String id);
+
+    /**
+     * 实现给用户分配角色
+     *
+     * @param userId
+     * @param roleIds
+     */
+    void updateUserRoles(String userId, String[] roleIds);
 }

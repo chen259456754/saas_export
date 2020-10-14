@@ -18,7 +18,7 @@
 </head>
 <script>
     function formSubmit() {
-        document.icform.action="/system/user/changeRole.do";
+        document.icform.action="/system/user/changeRole";
         document.icform.submit();
     }
 </script>
@@ -44,7 +44,7 @@
             </div>
             <div class="box-body">
                 <form name="icform" method="post" >
-                    <input type="hidden" name="userid" value="${user.id}"/>
+                    <input type="hidden" name="userId" value="${user.id}"/>
                     <input type="hidden" name="oldRoleIds" value="${userRoleStr}"/>
                     <div class="textbox" id="centerTextbox">
                             <div style="text-align:left">

@@ -3,6 +3,8 @@ package cn.itcast.service.system;
 import cn.itcast.domain.system.Role;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
+
 public interface RoleService {
 
     /**
@@ -34,4 +36,20 @@ public interface RoleService {
      * 角色的权限分配
      */
     void updateRoleModule(String roleId, String moduleIds);
+
+    /**
+     * 查询所有的角色
+     *
+     * @param companyId
+     * @return
+     */
+    List<Role> findAll(String companyId);
+
+    /**
+     * 根据用户的id，查询用户拥有的角色
+     *
+     * @param userId
+     * @return
+     */
+    List<Role> findUserRole(String userId);
 }

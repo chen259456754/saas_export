@@ -118,7 +118,7 @@ public class RoleController extends BaseController {
      * <p>
      * 功能入口：role-list.jsp 勾选用户后点击权限
      * 请求地址：http://localhost:8080/role/roleModule
-     * 请求参数：根据用户id删除
+     * 请求参数：角色id
      * 响应地址：/WEB-INF/pages/system/role/role-module.jsp
      */
     @RequestMapping(path = "/roleModule")

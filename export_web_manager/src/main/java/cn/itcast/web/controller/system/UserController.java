@@ -1,8 +1,10 @@
 package cn.itcast.web.controller.system;
 
 import cn.itcast.domain.system.Dept;
+import cn.itcast.domain.system.Role;
 import cn.itcast.domain.system.User;
 import cn.itcast.service.system.DeptService;
+import cn.itcast.service.system.RoleService;
 import cn.itcast.service.system.UserService;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
@@ -24,6 +26,8 @@ public class UserController extends BaseController {
     UserService userService;
     @Resource
     DeptService deptService;
+    @Resource
+    RoleService roleService;
 
     /**
      * 用户列表分页
@@ -117,5 +121,46 @@ public class UserController extends BaseController {
             map.put("message", "当前删除的记录被外键引用，删除失败");
         }
         return map;
+    }
+
+    /**
+     * 进入勾选的用户的角色选择界面
+     * <p>
+     * 功能入口：user-list.jsp 勾选用户后点击权限
+     * 请求地址：http://localhost:8080/user/roleList
+     * 请求参数：所选用户的id
+     * 响应地址：/WEB-INF/pages/system/user/user-role.jsp
+     */
+    @RequestMapping(path = "/roleList")
+    public String roleList(String id) {
+        //根据id查询用户信息
+        User user = userService.findById(id);
+        //获取用户所属公司的id
+        String companyId = getLoginCompanyId();
+        //查询所有的角色列表
+        List<Role> roleList = roleService.findAll(companyId);
+        //根据用户id查询用户已经具有的角色集合
+        List<Role> userRoles = roleService.findUserRole(id);
+        //保存用户角色的字符串
+        String userRoleStr = "";
+        for (Role userRole : userRoles) {
+            userRoleStr += userRole.getId() + ",";
+        }
+        //保存数据
+        request.setAttribute("user", user);
+        request.setAttribute("roleList", roleList);
+        request.setAttribute("userRoleStr", userRoleStr);
+
+        return "system/user/user-role";
+    }
+
+    /**
+     * 实现给用户分配角色
+     */
+    @RequestMapping(path = "/changeRole")
+    public String changeRole(String userId, String[] roleIds) {
+        //调用service方法分配角色
+        userService.updateUserRoles(userId, roleIds);
+        return "redirect:/system/user/list";
     }
 }

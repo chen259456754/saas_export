@@ -40,4 +40,6 @@ public interface RoleDao {
      * 角色添加模块
      */
     void saveRoleModule(String roleId, String id);
+
+    List<Role> findUserRole(String userId);
 }

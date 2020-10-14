@@ -36,4 +36,19 @@ public interface UserDao {
      * 根据用户id查询用户角色中间表
      */
     Long findUserRoleByUserId(String id);
+
+    /**
+     * 根据用户id删除中间表数据
+     *
+     * @param userId
+     */
+    void deleteUserRole(String userId);
+
+    /**
+     * 向中间表中保存数据
+     *
+     * @param userId
+     * @param roleId
+     */
+    void saveUserRole(String userId, String roleId);
 }
