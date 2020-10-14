@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.itcast.dao.system.ModuleDao">
-
     <resultMap type="cn.itcast.domain.system.Module" id="BaseResultMap">
         <id property="id" column="module_id" jdbcType="VARCHAR"/>
         <result property="parentId" column="parent_id" jdbcType="VARCHAR"/>
@@ -85,9 +84,16 @@
                order_no
         from ss_module
     </select>
+    <select id="findModuleByRoleId" resultMap="BaseResultMap">
+        select m.*
+        from pe_role_module rm,
+             ss_module m
+        where rm.module_id = m.module_id
+          and role_id = #{roleId}
+    </select>
 
     <!--新增-->
-    <insert id="save" keyProperty="id" useGeneratedKeys="true">
+    <insert id="save">
         insert into ss_module(module_id, parent_id, parent_name, name, layer_num, is_leaf, ico, cpermission, curl,
                               ctype, state, belong, cwhich, quote_num, remark, order_no)
         values (#{id}, #{parentId}, #{parentName}, #{name}, #{layerNum}, #{isLeaf}, #{ico}, #{cpermission}, #{curl},
@@ -97,7 +103,7 @@
     <!--通过主键修改数据-->
     <update id="update">
         update
-        ss_module
+                ss_module
         <set>
             <if test="parentId != null and parentId != ''">
                 parent_id = #{parentId},
@@ -154,5 +160,4 @@
         from ss_module
         where module_id = #{id}
     </delete>
-
 </mapper>

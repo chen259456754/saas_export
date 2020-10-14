@@ -31,4 +31,13 @@ public interface RoleDao {
      */
     void save(Role role);
 
+    /**
+     * 删除用户角色中间表的数据
+     */
+    void deleteRoleModule(String roleId);
+
+    /**
+     * 角色添加模块
+     */
+    void saveRoleModule(String roleId, String id);
 }

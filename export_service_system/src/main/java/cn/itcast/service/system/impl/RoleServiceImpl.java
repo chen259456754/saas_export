@@ -66,4 +66,24 @@ public class RoleServiceImpl implements RoleService {
         role.setId(id);
         roleDao.save(role);
     }
+
+    /**
+     * 角色的权限分配
+     *
+     * @param roleId
+     * @param moduleIds
+     */
+    @Override
+    public void updateRoleModule(String roleId, String moduleIds) {
+        //先删除用户角色表中的数据
+        roleDao.deleteRoleModule(roleId);
+        if (moduleIds != null) {
+            //分割字符串获取moduleId
+            String[] ids = moduleIds.split(",");
+            for (String id : ids) {
+                //遍历数组，实现角色添加模块
+                roleDao.saveRoleModule(roleId, id);
+            }
+        }
+    }
 }

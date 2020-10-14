@@ -37,5 +37,10 @@ public interface ModuleService {
      */
     void delete(String id);
 
+    /**
+     * 根据id查询角色所具有的权限信息
+     */
+    List<Module> findModuleByRoleId(String roleId);
+
 
 }

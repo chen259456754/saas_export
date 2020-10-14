@@ -5,6 +5,12 @@
 <div class="pull-left">
     <div class="form-group form-inline">
         总共${pageInfo.pages} 页，共${pageInfo.total} 条数据。
+        <label for="pageChange">每页显示</label><select id="pageChange" onchange="selectChange()">
+        <option value="5" ${pageInfo.pageSize ==10?'selected="selected"':''}>5</option>
+        <option value="10" ${pageInfo.pageSize ==10?'selected="selected"':''}>10</option>
+        <option value="15" ${pageInfo.pageSize ==15?'selected="selected"':''}>15</option>
+        <option value="20" ${pageInfo.pageSize ==20?'selected="selected"':''}>20</option>
+    </select><label for="pageChange">条</label>
     </div>
 </div>
 
@@ -28,11 +34,18 @@
 <%--${param.pageUrl}相当于request.getAttribute（“pageUrl”）--%>
 <form id="pageForm" action="${param.pageUrl}" method="post">
     <input type="hidden" name="pageNum" id="pageNum">
+    <input type="hidden" name="pageSize" id="pageSize">
 </form>
 <script>
     function goPage(pageNum) {
         //修改请求参数
         document.getElementById("pageNum").value = pageNum
+        document.getElementById("pageForm").submit()
+    }
+
+    function selectChange() {
+        let pageSizes = $('select option:selected').val();
+        document.getElementById("pageSize").value = pageSizes;
         document.getElementById("pageForm").submit()
     }
 </script>

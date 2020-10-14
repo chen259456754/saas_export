@@ -2,11 +2,14 @@ package cn.itcast.web.controller.company;
 
 import cn.itcast.domain.company.Company;
 import cn.itcast.service.company.CompanyService;
+import cn.itcast.web.controller.system.BaseController;
+import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
 import org.apache.shiro.util.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +18,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping(path = "/company")
-public class CompanyController {
+public class CompanyController extends BaseController {
 
     @Resource
     CompanyService companyService;
@@ -26,9 +29,11 @@ public class CompanyController {
      * 响应路径：/WEB-INF/pages/company/company-list.jsp
      */
     @RequestMapping(path = "/list", name = "企业列表")
-    public String list(HttpServletRequest request) {
-        List<Company> list = companyService.findAll();
-        request.setAttribute("list", list);
+    public String list(@RequestParam(defaultValue = "1") Integer pageNum,
+                       @RequestParam(defaultValue = "5") Integer pageSize) {
+
+        PageInfo<Company> pageInfo = companyService.findByPage(pageNum, pageSize);
+        request.setAttribute("pageInfo", pageInfo);
         return "company/company-list";
     }
 
@@ -61,10 +66,11 @@ public class CompanyController {
         companyService.delete(id);
         return "redirect:/company/list";
     }
-@RequestMapping(path = "/toUpdate")
-    public String toUpdate(String id, ModelMap model){
-        Company company =companyService.findById(id);
-        model.addAttribute("company",company);
+
+    @RequestMapping(path = "/toUpdate")
+    public String toUpdate(String id, ModelMap model) {
+        Company company = companyService.findById(id);
+        model.addAttribute("company", company);
         return "company/company-add";
     }
 

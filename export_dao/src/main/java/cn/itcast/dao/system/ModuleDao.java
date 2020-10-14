@@ -30,4 +30,9 @@ public interface ModuleDao {
      * 查询所有
      */
     List<Module> findAll();
+
+    /**
+     * 根据角色id，查询角色具有的权限
+     */
+    List<Module> findModuleByRoleId(String roleId);
 }

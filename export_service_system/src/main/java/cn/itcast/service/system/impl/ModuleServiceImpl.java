@@ -79,4 +79,13 @@ public class ModuleServiceImpl implements ModuleService {
     public void delete(String id) {
         moduleDao.delete(id);
     }
+
+    /**
+     * 根据id查询角色所具有的权限信息
+     *
+     */
+    @Override
+    public List<Module> findModuleByRoleId(String roleId) {
+        return moduleDao.findModuleByRoleId(roleId);
+    }
 }

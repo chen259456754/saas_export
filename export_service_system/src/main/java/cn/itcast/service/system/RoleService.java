@@ -30,4 +30,8 @@ public interface RoleService {
      */
     void save(Role role);
 
+    /**
+     * 角色的权限分配
+     */
+    void updateRoleModule(String roleId, String moduleIds);
 }

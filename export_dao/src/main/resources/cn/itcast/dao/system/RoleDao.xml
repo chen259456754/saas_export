@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.itcast.dao.system.RoleDao">
-
     <resultMap type="cn.itcast.domain.system.Role" id="BaseResultMap">
         <id property="id" column="role_id" jdbcType="VARCHAR"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
@@ -120,5 +119,15 @@
         from pe_role
         where role_id = #{id}
     </delete>
-
+    <!--根据角色id删除中间表中的数据-->
+    <delete id="deleteRoleModule">
+        delete
+        from pe_role_module
+        where role_id = #{roleId}
+    </delete>
+    <!--向角色模块中间表中添加数据，param1、param2表示第一个和第二个参数-->
+    <insert id="saveRoleModule">
+        insert into pe_role_module (role_id, module_id)
+        VALUES (#{param1}, #{param2})
+    </insert>
 </mapper>
