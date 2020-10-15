@@ -17,11 +17,18 @@
 <script>
     function deleteById() {
         var id = getCheckId()
-        if(id) {
-            if(confirm("你确认要删除此条记录吗？")) {
-                location.href="/system/module/delete.do?id="+id;
+        if (id) {
+            if (confirm("你确认要删除此条记录吗？")) {
+                $.get(
+                    "/system/module/delete",
+                    {"id":id},
+                    function (jsn){
+                        alert(jsn.message);
+                        window.location.reload();
+                    }
+                );
             }
-        }else{
+        } else {
             alert("请勾选待处理的记录，且每次只能勾选一个")
         }
     }

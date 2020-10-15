@@ -142,6 +142,18 @@
         from pe_role r,
              pe_role_user ru
         where r.role_id = ru.role_id
-          and ru.user_id = #{userId};
+          and ru.user_id = #{userId}
+    </select>
+
+    <select id="findUserRoleByRoleId" resultType="java.lang.Long">
+        select count(1)
+        from pe_role_user
+        where role_id = #{id}
+    </select>
+
+    <select id="findRoleModuleByRoleId" resultType="java.lang.Long">
+        select count(1)
+        from pe_role_module
+        where role_id = #{id}
     </select>
 </mapper>

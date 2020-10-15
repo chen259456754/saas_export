@@ -61,7 +61,6 @@ public class UserServiceImpl implements UserService {
             userDao.delete(id);
             return true;
         }
-
     }
 
     /**
@@ -88,5 +87,16 @@ public class UserServiceImpl implements UserService {
         for (String roleId : roleIds) {
             userDao.saveUserRole(userId, roleId);
         }
+    }
+
+    /**
+     * 通过邮箱账号查询用户对象
+     *
+     * @param email
+     * @return
+     */
+    @Override
+    public User findByEmail(String email) {
+        return userDao.findByEmail(email);
     }
 }

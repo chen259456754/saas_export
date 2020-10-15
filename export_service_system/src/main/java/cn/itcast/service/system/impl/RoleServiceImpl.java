@@ -41,8 +41,15 @@ public class RoleServiceImpl implements RoleService {
      * @param id
      */
     @Override
-    public void delete(String id) {
-        roleDao.delete(id);
+    public boolean delete(String id) {
+        Long userROle = roleDao.findUserRoleByRoleId(id);
+        Long moduleRole = roleDao.findRoleModuleByRoleId(id);
+        if ((userROle != null && userROle > 0) || (moduleRole != null && moduleRole > 0)){
+            return false;
+        }else {
+            roleDao.delete(id);
+            return true;
+        }
     }
 
     /**

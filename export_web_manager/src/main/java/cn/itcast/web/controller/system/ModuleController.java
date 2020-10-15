@@ -8,10 +8,13 @@ import com.github.pagehelper.util.StringUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(path = "/system/module")
@@ -104,9 +107,16 @@ public class ModuleController extends BaseController {
      * 响应地址：/system/role/list
      */
     @RequestMapping(path = "/delete")
-    public String delete(String id) {
-        moduleService.delete(id);
-        return "redirect:/system/module/list";
+    @ResponseBody
+    public Map<String,Object> delete(String id) {
+        Map<String,Object> map = new HashMap<>();
+        boolean flag = moduleService.delete(id);
+        if (flag) {
+            map.put("message", "删除成功");
+        } else {
+            map.put("message", "当前删除的记录被外键引用，删除失败");
+        }
+        return map;
     }
 
 }

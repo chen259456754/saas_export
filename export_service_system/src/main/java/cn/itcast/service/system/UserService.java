@@ -37,4 +37,12 @@ public interface UserService {
      * @param roleIds
      */
     void updateUserRoles(String userId, String[] roleIds);
+
+    /**
+     * 通过邮箱账号查询用户对象
+     *
+     * @param email
+     * @return
+     */
+    User findByEmail(String email);
 }

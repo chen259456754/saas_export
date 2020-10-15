@@ -35,4 +35,11 @@ public interface ModuleDao {
      * 根据角色id，查询角色具有的权限
      */
     List<Module> findModuleByRoleId(String roleId);
+
+    /**
+     * 根据模块id查询角色模块中间表
+     * @param id
+     * @return
+     */
+    Long findRoleModuleByModuleId(String id);
 }

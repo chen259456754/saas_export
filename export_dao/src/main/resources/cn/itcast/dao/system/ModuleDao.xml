@@ -160,4 +160,10 @@
         from ss_module
         where module_id = #{id}
     </delete>
+    <!--根据模块id查询角色模块中间表-->
+    <select id="findRoleModuleByModuleId" resultType="java.lang.Long">
+        select count(1)
+        from pe_role_module
+        where module_id = #{id}
+    </select>
 </mapper>

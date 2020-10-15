@@ -35,7 +35,7 @@ public interface ModuleService {
     /**
      * 删除
      */
-    void delete(String id);
+    boolean delete(String id);
 
     /**
      * 根据id查询角色所具有的权限信息

@@ -76,8 +76,14 @@ public class ModuleServiceImpl implements ModuleService {
      * @param id
      */
     @Override
-    public void delete(String id) {
-        moduleDao.delete(id);
+    public boolean delete(String id) {
+        Long moduleRole = moduleDao.findRoleModuleByModuleId(id);
+        if (moduleRole != null && moduleRole > 0 ){
+            return false;
+        }else {
+            moduleDao.delete(id);
+            return true;
+        }
     }
 
     /**

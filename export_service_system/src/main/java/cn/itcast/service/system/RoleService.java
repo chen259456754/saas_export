@@ -20,7 +20,7 @@ public interface RoleService {
     /**
      * 根据id删除
      */
-    void delete(String id);
+    boolean delete(String id);
 
     /**
      * 更新

@@ -42,4 +42,20 @@ public interface RoleDao {
     void saveRoleModule(String roleId, String id);
 
     List<Role> findUserRole(String userId);
+
+    /**
+     * 根据角色id查询用户角色中间表
+     *
+     * @param id
+     * @return
+     */
+    Long findUserRoleByRoleId(String id);
+
+    /**
+     * 根据角色id查询角色模块中间表
+     *
+     * @param id
+     * @return
+     */
+    Long findRoleModuleByRoleId(String id);
 }

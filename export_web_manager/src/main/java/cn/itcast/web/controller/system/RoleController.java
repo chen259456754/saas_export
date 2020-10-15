@@ -108,9 +108,16 @@ public class RoleController extends BaseController {
      * 响应地址：/system/role/list
      */
     @RequestMapping(path = "/delete")
-    public String delete(String id) {
-        roleService.delete(id);
-        return "redirect:/system/role/list";
+    @ResponseBody
+    public Map<String,Object> delete(String id) {
+        Map<String,Object> map = new HashMap<>();
+        boolean flag = roleService.delete(id);
+        if (flag) {
+            map.put("message", "删除成功");
+        } else {
+            map.put("message", "当前删除的记录被外键引用，删除失败");
+        }
+        return map;
     }
 
     /**
