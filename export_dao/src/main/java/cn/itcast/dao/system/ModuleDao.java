@@ -38,8 +38,25 @@ public interface ModuleDao {
 
     /**
      * 根据模块id查询角色模块中间表
+     *
      * @param id
      * @return
      */
     Long findRoleModuleByModuleId(String id);
+
+    /**
+     * 根据从属belong字段查询用户权限
+     *
+     * @param belong
+     * @return
+     */
+    List<Module> findByBelong(int belong);
+
+    /**
+     * 根据用户id查询其权限
+     *
+     * @param userId
+     * @return
+     */
+    List<Module> findModuleByUserId(String userId);
 }

@@ -1,6 +1,8 @@
 package cn.itcast.web.controller;
 
+import cn.itcast.domain.system.Module;
 import cn.itcast.domain.system.User;
+import cn.itcast.service.system.ModuleService;
 import cn.itcast.service.system.UserService;
 import cn.itcast.web.controller.system.BaseController;
 import com.github.pagehelper.util.StringUtil;
@@ -8,12 +10,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Controller
 public class LoginController extends BaseController {
 
     @Resource
     UserService userService;
+    @Resource
+    ModuleService moduleService;
 
     /**
      * 用户登录的方法，判断用户登录信息是否正确
@@ -34,6 +39,10 @@ public class LoginController extends BaseController {
         if (user != null && password.equals(user.getPassword())) {
             //登录成功将用户数据保存到会话域中
             session.setAttribute("loginUser", user);
+            //获取该用户拥有的权限
+            String userId = user.getId();
+            List<Module> modules = moduleService.findModuleByUserId(userId);
+            session.setAttribute("modules", modules);
             return "home/main";
         } else {
             //登录失败则跳转到登录页面
@@ -48,5 +57,16 @@ public class LoginController extends BaseController {
     @RequestMapping(path = "/home")
     public String home() {
         return "home/home";
+    }
+
+    /**
+     * 注销
+     *
+     * @return
+     */
+    @RequestMapping(path = "/logout")
+    public String logout() {
+        session.removeAttribute("loginUser");
+        return "forward:/login.jsp";
     }
 }

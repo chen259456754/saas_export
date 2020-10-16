@@ -40,6 +40,7 @@
     function goPage(pageNum) {
         //修改请求参数
         document.getElementById("pageNum").value = pageNum
+        document.getElementById("pageSize").value = $('select option:selected').val();
         document.getElementById("pageForm").submit()
     }
 

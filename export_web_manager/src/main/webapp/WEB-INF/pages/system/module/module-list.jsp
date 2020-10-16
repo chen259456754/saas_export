@@ -100,7 +100,7 @@
                     <c:forEach items="${pageInfo.list}" var="o"  varStatus="st">
                         <tr>
                             <td><input type="checkbox" name="id" value="${o.id }"/></td>
-                            <td>${status.index+1}</td>
+                            <td>${st.count}</td>
                             <td><a href="moduleAction_toview?id=${o.id}">${o.name}</a></td>
                             <td>${o.parentName}</td>
                             <td>${o.cpermission}</td>

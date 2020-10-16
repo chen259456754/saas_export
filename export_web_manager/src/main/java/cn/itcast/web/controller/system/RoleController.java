@@ -109,8 +109,8 @@ public class RoleController extends BaseController {
      */
     @RequestMapping(path = "/delete")
     @ResponseBody
-    public Map<String,Object> delete(String id) {
-        Map<String,Object> map = new HashMap<>();
+    public Map<String, Object> delete(String id) {
+        Map<String, Object> map = new HashMap<>();
         boolean flag = roleService.delete(id);
         if (flag) {
             map.put("message", "删除成功");
@@ -160,6 +160,8 @@ public class RoleController extends BaseController {
             map.put("pId", module.getParentId());
             //添加模块名称
             map.put("name", module.getName());
+            //设置展开ztree
+            map.put("open", true);
             if (roleModules.contains(module)) {
                 //如果角色包含该模块则默认勾选
                 map.put("checked", true);

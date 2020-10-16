@@ -43,4 +43,8 @@ public interface ModuleService {
     List<Module> findModuleByRoleId(String roleId);
 
 
+    /**
+     * 根据用户id查询用户的权限
+     */
+    List<Module> findModuleByUserId(String userId);
 }
