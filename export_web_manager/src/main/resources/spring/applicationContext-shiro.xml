@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <description>Shiro与Spring整合</description>
+    <!--配置shiro的过滤器工厂-->
+    <bean class="org.apache.shiro.spring.web.ShiroFilterFactoryBean" id="shiroFilter">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/login.jsp"/>
+        <property name="unauthorizedUrl" value="/unauthorized.jsp"/>
+        <property name="filterChainDefinitions">
+            <value>
+                /index.jsp* = anon
+                /login.jsp* = anon
+                /login* = anon
+                /logout* = anon
+                /css/** = anon
+                /img/** = anon
+                /plugins/** = anon
+                /make/** = anon
+                /** = authc
+            </value>
+        </property>
+    </bean>
+
+    <!--配置安全管理器-->
+    <bean class="org.apache.shiro.web.mgt.DefaultWebSecurityManager" id="securityManager">
+        <!--引用自定义Realm域-->
+        <property name="realm" ref="authRealm"/>
+    </bean>
+
+    <!--配置自定义的Realm域-->
+    <bean class="cn.itcast.web.shiro.AuthRealm" id="authRealm">
+        <!--注入凭证匹配器-->
+        <property name="credentialsMatcher" ref="credentialsMatcher"/>
+    </bean>
+    <!--配置自定义的凭证匹配器，对用户输入的密码按照指定的算法进行加密-->
+    <bean class="cn.itcast.web.shiro.CustomCredentialsMatcher" id="credentialsMatcher"/>
+</beans>

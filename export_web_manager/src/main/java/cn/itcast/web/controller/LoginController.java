@@ -5,7 +5,9 @@ import cn.itcast.domain.system.User;
 import cn.itcast.service.system.ModuleService;
 import cn.itcast.service.system.UserService;
 import cn.itcast.web.controller.system.BaseController;
-import com.github.pagehelper.util.StringUtil;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,7 +23,7 @@ public class LoginController extends BaseController {
     ModuleService moduleService;
 
     /**
-     * 用户登录的方法，判断用户登录信息是否正确
+     * 通过shiro进行登录认证
      * <p>
      * 1、访问地址 http://localhost:8080/index.jsp
      * 2、index.jsp页面跳转：window.location.href = "login.do";
@@ -29,25 +31,26 @@ public class LoginController extends BaseController {
      */
     @RequestMapping(path = "/login")
     public String login(String email, String password) {
-        //判断用户输入的数据是否为空
-        if (StringUtil.isEmpty(email) || StringUtil.isEmpty(password)) {
-            return "forward:/login.jsp";
-        }
-        //通过邮箱账号查询用户信息
-        User user = userService.findByEmail(email);
-        //比较查询的用户信息和输入的密码是否一致
-        if (user != null && password.equals(user.getPassword())) {
-            //登录成功将用户数据保存到会话域中
+        try {
+            //获取Subject
+            Subject subject = SecurityUtils.getSubject();
+            //构造用户名及密码
+            UsernamePasswordToken upToken = new UsernamePasswordToken(email, password);
+            //借助subject完成用户登录
+            subject.login(upToken);
+            //通过shiro获取用户对象，保存到session中
+            User user = (User) subject.getPrincipal();
             session.setAttribute("loginUser", user);
-            //获取该用户拥有的权限
-            String userId = user.getId();
-            List<Module> modules = moduleService.findModuleByUserId(userId);
+            //获取菜单数据
+            List<Module> modules = moduleService.findModuleByUserId(user.getId());
             session.setAttribute("modules", modules);
+            //跳转到成功页面
             return "home/main";
-        } else {
-            //登录失败则跳转到登录页面
-            request.setAttribute("error", "用户名或密码错误！");
-            return "forward:/login.jsp";
+        } catch (Exception e) {
+            e.printStackTrace();
+            //登录失败跳转页面
+            request.setAttribute("error", "用户名或密码错误");
+            return "forward:login.jsp";
         }
     }
 
@@ -66,6 +69,9 @@ public class LoginController extends BaseController {
      */
     @RequestMapping(path = "/logout")
     public String logout() {
+        //通过shiro实现退出（清除shiro中的认证信息）
+        SecurityUtils.getSubject().logout();
+        //清空session中的登录用户
         session.removeAttribute("loginUser");
         return "forward:/login.jsp";
     }
