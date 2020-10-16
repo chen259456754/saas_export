@@ -1,7 +1,6 @@
 package cn.itcast.web.controller.system;
 
 import cn.itcast.domain.system.Module;
-import cn.itcast.domain.system.Role;
 import cn.itcast.service.system.ModuleService;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;

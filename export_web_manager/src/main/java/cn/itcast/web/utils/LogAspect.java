@@ -3,7 +3,6 @@ package cn.itcast.web.utils;
 import cn.itcast.domain.system.SysLog;
 import cn.itcast.domain.system.User;
 import cn.itcast.service.system.SysLogService;
-import org.apache.http.HttpRequest;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

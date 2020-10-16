@@ -2,7 +2,6 @@ package cn.itcast.web.controller.system;
 
 import cn.itcast.domain.system.Module;
 import cn.itcast.domain.system.Role;
-import cn.itcast.service.system.DeptService;
 import cn.itcast.service.system.ModuleService;
 import cn.itcast.service.system.RoleService;
 import com.github.pagehelper.PageInfo;
