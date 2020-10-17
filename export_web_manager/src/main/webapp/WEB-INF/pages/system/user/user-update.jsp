@@ -94,6 +94,7 @@
                     <div class="col-md-2 title">等级</div>
                     <div class="col-md-4 data">
                         <div class="form-group form-inline">
+                            <div class="radio"><label><input type="radio" ${user.degree==0?'checked':''} name="degree" value="0">Saas管理员</label></div>
                             <div class="radio"><label><input type="radio" ${user.degree==1?'checked':''} name="degree" value="1">系统管理员</label></div>
                             <div class="radio"><label><input type="radio" ${user.degree==2?'checked':''} name="degree" value="2">管理所有下属部门和人员</label></div>
                             <div class="radio"><label><input type="radio" ${user.degree==3?'checked':''} name="degree" value="3">管理本部门</label></div>

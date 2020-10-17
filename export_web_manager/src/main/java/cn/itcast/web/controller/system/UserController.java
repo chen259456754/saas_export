@@ -8,6 +8,7 @@ import cn.itcast.service.system.RoleService;
 import cn.itcast.service.system.UserService;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,6 +37,7 @@ public class UserController extends BaseController {
      * 响应地址：/WEB-INF/pages/system/user/user-list.jsp
      */
     @RequestMapping(path = "/list")
+    @RequiresPermissions("用户管理")
     public String list(@RequestParam(defaultValue = "1") int pageNum,
                        @RequestParam(defaultValue = "5") int pageSize) {
         //获取所属公司id
@@ -141,7 +143,7 @@ public class UserController extends BaseController {
         List<Role> roleList = roleService.findAll(companyId);
         //根据用户id查询用户已经具有的角色集合
         List<Role> userRoles = roleService.findUserRole(id);
-        //保存用户角色的字符串
+        //保存用户拥有的所有的角色id
         String userRoleStr = "";
         for (Role userRole : userRoles) {
             userRoleStr += userRole.getId() + ",";

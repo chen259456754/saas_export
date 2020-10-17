@@ -26,8 +26,7 @@ public class CustomExceptionResolver implements HandlerExceptionResolver {
         ex.printStackTrace();
         ModelAndView mv = new ModelAndView();
         mv.setViewName("error");
-        mv.addObject("errorMsg", "对不起，我错了！");
-        mv.addObject("ex", ex);
+        mv.addObject("errorMsg", ex);
         return mv;
 
     }

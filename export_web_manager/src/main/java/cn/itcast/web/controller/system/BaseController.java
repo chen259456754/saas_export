@@ -1,6 +1,8 @@
 package cn.itcast.web.controller.system;
 
 
+import cn.itcast.domain.system.User;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,13 +21,22 @@ public abstract class BaseController {
      * 获取登录用户所属企业的id
      */
     public String getLoginCompanyId() {
-        return "1";
+        return getLoginUser().getCompanyId();
     }
 
     /**
      * 获取登录用户所属企业的名称
      */
     public String getLoginCompanyName() {
-        return "传智播客教育股份有限公司";
+        return getLoginUser().getCompanyName();
+    }
+
+    /**
+     * 获取登录的User信息
+     *
+     * @return
+     */
+    public User getLoginUser() {
+        return (User) session.getAttribute("loginUser");
     }
 }

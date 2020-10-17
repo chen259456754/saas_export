@@ -84,8 +84,10 @@ public class UserServiceImpl implements UserService {
         //根据userId删除中间表数据
         userDao.deleteUserRole(userId);
         //遍历roleIds中的roleId，想中间表中保存数据
-        for (String roleId : roleIds) {
-            userDao.saveUserRole(userId, roleId);
+        if (roleIds != null && roleIds.length > 0) {
+            for (String roleId : roleIds) {
+                userDao.saveUserRole(userId, roleId);
+            }
         }
     }
 
