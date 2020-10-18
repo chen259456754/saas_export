@@ -5,6 +5,7 @@ import cn.itcast.domain.system.User;
 import cn.itcast.service.system.ModuleService;
 import cn.itcast.service.system.UserService;
 import cn.itcast.web.controller.system.BaseController;
+import com.github.pagehelper.util.StringUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -31,6 +32,10 @@ public class LoginController extends BaseController {
      */
     @RequestMapping(path = "/login")
     public String login(String email, String password) {
+        //首先判断用户名密码是否为空
+        if (StringUtil.isEmpty(email) || StringUtil.isEmpty(password)) {
+            return "forward:/login.jsp";
+        }
         try {
             //获取Subject
             Subject subject = SecurityUtils.getSubject();
@@ -73,6 +78,7 @@ public class LoginController extends BaseController {
         SecurityUtils.getSubject().logout();
         //清空session中的登录用户
         session.removeAttribute("loginUser");
+        session.invalidate();
         return "forward:/login.jsp";
     }
 }

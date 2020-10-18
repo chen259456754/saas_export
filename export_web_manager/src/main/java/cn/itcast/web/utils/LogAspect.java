@@ -34,7 +34,7 @@ public class LogAspect {
      * @param pjp
      * @return
      */
-    @Around(value = "execution(* cn.itcast.web.controller.*.*.*(..))")
+    @Around(value = "execution(* cn.itcast.web.controller.*.*.*(..)) && !bean(sysLogController))")
     public Object log(ProceedingJoinPoint pjp) {
 
         //获取用户登录信息
@@ -62,8 +62,8 @@ public class LogAspect {
         log.setAction(fullClassName);
 
         try {
-            //保存日志信息到数据库
-            sysLogService.save(log);
+                //保存日志信息到数据库
+                sysLogService.save(log);
             //执行方法
             return pjp.proceed();
         } catch (Throwable throwable) {

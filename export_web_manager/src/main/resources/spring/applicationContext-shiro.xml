@@ -6,8 +6,11 @@
     <!--配置shiro的过滤器工厂-->
     <bean class="org.apache.shiro.spring.web.ShiroFilterFactoryBean" id="shiroFilter">
         <property name="securityManager" ref="securityManager"/>
+        <!--认证失败默认跳转到的页面-->
         <property name="loginUrl" value="/login.jsp"/>
+        <!--授权校验失败默认跳转的页面-->
         <property name="unauthorizedUrl" value="/unauthorized.jsp"/>
+        <!--配置过滤器执行链-->
         <property name="filterChainDefinitions">
             <value>
                 /index.jsp* = anon
@@ -18,6 +21,9 @@
                 /img/** = anon
                 /plugins/** = anon
                 /make/** = anon
+                /system/log/** =perms["日志管理"]
+                /system/user/** = perms["用户管理"]
+                /system/dept/** = perms["部门管理"]
                 /** = authc
             </value>
         </property>
@@ -38,7 +44,8 @@
     <bean class="cn.itcast.web.shiro.CustomCredentialsMatcher" id="credentialsMatcher"/>
     <!--开启shiro的注解支持-->
     <bean class="org.apache.shiro.spring.LifecycleBeanPostProcessor" id="lifecycleBeanPostProcessor"/>
-    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>

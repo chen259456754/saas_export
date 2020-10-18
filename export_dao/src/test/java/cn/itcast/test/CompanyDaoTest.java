@@ -42,7 +42,7 @@ public class CompanyDaoTest {
     }
     @Test
     public void test(){
-        String username = "test@123.com";
+        String username = "lw@export.com";
         String password = "123";
         Md5Hash encoding = new Md5Hash(password, username);
         System.out.println(encoding);

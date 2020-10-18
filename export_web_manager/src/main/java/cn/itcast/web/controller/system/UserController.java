@@ -37,7 +37,6 @@ public class UserController extends BaseController {
      * 响应地址：/WEB-INF/pages/system/user/user-list.jsp
      */
     @RequestMapping(path = "/list")
-    @RequiresPermissions("用户管理")
     public String list(@RequestParam(defaultValue = "1") int pageNum,
                        @RequestParam(defaultValue = "5") int pageSize) {
         //获取所属公司id
