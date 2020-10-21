@@ -2,21 +2,20 @@ package cn.itcast.web.controller.company;
 
 import cn.itcast.domain.company.Company;
 import cn.itcast.service.company.CompanyService;
-import cn.itcast.web.controller.system.BaseController;
+import cn.itcast.web.controller.BaseController;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.annotation.Resource;
-
 @Controller
 @RequestMapping(path = "/company")
 public class CompanyController extends BaseController {
 
-    @Resource
+    @DubboReference
     CompanyService companyService;
 
     /**

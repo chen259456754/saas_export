@@ -45,10 +45,12 @@
     <servlet>
         <servlet-name>dispatcherServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!--加载指定的配置文件-->
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:spring/spring-mvc.xml</param-value>
         </init-param>
+        <!--启动初始化-->
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>

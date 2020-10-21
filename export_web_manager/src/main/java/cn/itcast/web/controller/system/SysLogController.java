@@ -2,6 +2,7 @@ package cn.itcast.web.controller.system;
 
 import cn.itcast.domain.system.SysLog;
 import cn.itcast.service.system.SysLogService;
+import cn.itcast.web.controller.BaseController;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -4,6 +4,7 @@ import cn.itcast.domain.system.Module;
 import cn.itcast.domain.system.Role;
 import cn.itcast.service.system.ModuleService;
 import cn.itcast.service.system.RoleService;
+import cn.itcast.web.controller.BaseController;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
 import org.springframework.stereotype.Controller;

@@ -4,7 +4,6 @@ import cn.itcast.domain.system.Module;
 import cn.itcast.domain.system.User;
 import cn.itcast.service.system.ModuleService;
 import cn.itcast.service.system.UserService;
-import cn.itcast.web.controller.system.BaseController;
 import com.github.pagehelper.util.StringUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;

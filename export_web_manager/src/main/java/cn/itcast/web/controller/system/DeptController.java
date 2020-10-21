@@ -2,6 +2,7 @@ package cn.itcast.web.controller.system;
 
 import cn.itcast.domain.system.Dept;
 import cn.itcast.service.system.DeptService;
+import cn.itcast.web.controller.BaseController;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
 import org.springframework.stereotype.Controller;
