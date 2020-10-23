@@ -133,6 +133,8 @@
         from pe_dept
         where dept_id = #{id}
     </delete>
-
-
+    
+    <select id="findAllIds" resultType="java.lang.String">
+        select dept_id from pe_dept where parent_id=#{deptId}
+    </select>
 </mapper>

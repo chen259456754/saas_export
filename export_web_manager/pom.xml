@@ -48,5 +48,17 @@
             <artifactId>qiniu-java-sdk</artifactId>
             <version>7.3.0</version>
         </dependency>
+        <!--ApachePOI依赖包-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+        <!--支持excel07版本的操作-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>4.0.1</version>
+        </dependency>
     </dependencies>
 </project>

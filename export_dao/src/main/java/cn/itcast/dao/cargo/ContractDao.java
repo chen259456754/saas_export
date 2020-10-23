@@ -21,4 +21,7 @@ public interface ContractDao {
 
 	//更新
     int updateByPrimaryKeySelective(Contract record);
+
+    //根据登录用户的id，查询当前部门及其子部门创建的购销合同
+    List<Contract> findContractByDeptId(String deptId);
 }

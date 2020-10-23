@@ -1,9 +1,11 @@
 package cn.itcast.domain.cargo;
 
 import cn.itcast.domain.BaseEntity;
+import com.sun.xml.internal.ws.developer.Serialization;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,7 +13,7 @@ import java.util.Date;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class Contract extends BaseEntity {
+public class Contract extends BaseEntity implements Serializable {
 	private String id;
 	private String offeror;			//收购方
 	private String contractNo;		//合同号，订单号

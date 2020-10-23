@@ -13,18 +13,18 @@ public interface ContractProductService {
     /**
      * 分页查询
      *
-     * @param ContractProductExample 分页查询的参数
+     * @param contractProductExample 分页查询的参数
      * @param pageNum                当前页
      * @param pageSize               页大小
      * @return
      */
     PageInfo<ContractProduct> findByPage(
-            ContractProductExample ContractProductExample, int pageNum, int pageSize);
+            ContractProductExample contractProductExample, int pageNum, int pageSize);
 
     /**
      * 查询所有
      */
-    List<ContractProduct> findAll(ContractProductExample ContractProductExample);
+    List<ContractProduct> findAll(ContractProductExample contractProductExample);
 
     /**
      * 根据id查询

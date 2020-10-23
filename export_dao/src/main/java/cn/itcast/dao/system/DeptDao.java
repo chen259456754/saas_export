@@ -33,4 +33,6 @@ public interface DeptDao {
     void delete(String id);
 
     List<Dept> findByParentId(String id);
+
+    List<String> findAllIds(String deptId);
 }

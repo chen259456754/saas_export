@@ -14,12 +14,12 @@ public interface FactoryService {
      * 分页查询
      */
     PageInfo<Factory> findByPage(
-            FactoryExample FactoryExample, int pageNum, int pageSize);
+            FactoryExample factoryExample, int pageNum, int pageSize);
 
     /**
      * 查询所有
      */
-    List<Factory> findAll(FactoryExample FactoryExample);
+    List<Factory> findAll(FactoryExample factoryExample);
 
     /**
      * 根据id查询
@@ -32,12 +32,12 @@ public interface FactoryService {
     /**
      * 新增
      */
-    void save(Factory Factory);
+    void save(Factory factory);
 
     /**
      * 修改
      */
-    void update(Factory Factory);
+    void update(Factory factory);
 
     /**
      * 删除部门

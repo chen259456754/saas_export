@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @DubboService
-public class ContractServiceImpl implements ContractService {
+public  class ContractServiceImpl implements ContractService {
     @Resource
     private ContractDao contractDao;
 
@@ -96,5 +96,19 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public void delete(String id) {
         contractDao.deleteByPrimaryKey(id);
+    }
+
+    /**
+     * 根据登陆用户的部门id，查询当前部门及其子部门创建的购销合同
+     *
+     * @param deptId   登陆用户的部门id
+     * @param pageNum  当前页
+     * @param pageSize 页大小
+     */
+    @Override
+    public PageInfo<Contract> findContractByDeptId(String deptId, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Contract> list = contractDao.findContractByDeptId(deptId);
+        return new PageInfo<>(list);
     }
 }

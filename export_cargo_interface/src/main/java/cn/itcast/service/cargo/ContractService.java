@@ -5,6 +5,7 @@ import cn.itcast.domain.cargo.ContractExample;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
+
 /**
  * 购销合同模块
  */
@@ -56,4 +57,14 @@ public interface ContractService {
      * @param id
      */
     void delete(String id);
+
+    /**
+     * 根据登陆用户的部门id，查询当前部门及其子部门创建的购销合同
+     *
+     * @param deptId   登陆用户的部门id
+     * @param pageNum  当前页
+     * @param pageSize 页大小
+     * @return
+     */
+    PageInfo<Contract> findContractByDeptId(String deptId, Integer pageNum, Integer pageSize);
 }

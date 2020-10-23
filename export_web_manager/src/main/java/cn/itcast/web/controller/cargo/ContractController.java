@@ -2,6 +2,7 @@ package cn.itcast.web.controller.cargo;
 
 import cn.itcast.domain.cargo.Contract;
 import cn.itcast.domain.cargo.ContractExample;
+import cn.itcast.domain.system.User;
 import cn.itcast.service.cargo.ContractService;
 import cn.itcast.web.controller.BaseController;
 import com.github.pagehelper.PageInfo;
@@ -30,6 +31,27 @@ public class ContractController extends BaseController {
         ContractExample.Criteria criteria = example.createCriteria();
         //查询条件：企业id
         criteria.andCompanyIdEqualTo(getLoginCompanyId());
+
+        /**
+         * 细粒度权限控制
+         */
+        //获取登录用户
+        User user = getLoginUser();
+        Integer degree = user.getDegree();
+        switch (degree) {
+            //普通员工登陆，degree=4,只能查看自己创建的购销合同
+            case 4:
+                criteria.andCreateByEqualTo(user.getId());
+                break;
+            //部门经理登陆，degree=3,可以查看自己部门下所有员工创建的购销合同
+            case 3:
+                criteria.andCreateDeptEqualTo(user.getDeptId());
+                break;
+            case 2:
+                //大部门经理登陆，degree=2，可以查看自己部门及其所有子部门创建的购销合同
+                contractService.findContractByDeptId(user.getDeptId(), pageNum, pageSize);
+                break;
+        }
         //调用service查询
         PageInfo<Contract> pageInfo = contractService.findByPage(example, pageNum, pageSize);
         //返回
@@ -60,6 +82,8 @@ public class ContractController extends BaseController {
         contract.setCompanyId(getLoginCompanyId());
         contract.setCompanyName(getLoginCompanyName());
         if (StringUtil.isEmpty(contract.getId())) {
+            contract.setCreateBy(getLoginUser().getId());
+            contract.setCreateDept(getLoginUser().getDeptId());
             contractService.save(contract);
         } else {
             contractService.update(contract);
