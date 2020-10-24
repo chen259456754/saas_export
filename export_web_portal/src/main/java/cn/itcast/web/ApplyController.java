@@ -3,9 +3,7 @@ package cn.itcast.web;
 import cn.itcast.domain.company.Company;
 import cn.itcast.service.company.CompanyService;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

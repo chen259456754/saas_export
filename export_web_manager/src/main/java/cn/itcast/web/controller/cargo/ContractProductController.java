@@ -11,6 +11,10 @@ import cn.itcast.web.utils.FileUploadUtil;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -118,4 +122,64 @@ public class ContractProductController extends BaseController {
         return "redirect:/cargo/contractProduct/list?contractId=" + contractId;
     }
 
+    /**
+     * 进入上传页面
+     *
+     * @param contractId
+     * @return
+     */
+    @RequestMapping(path = "/toImport")
+    public String toImport(String contractId) {
+        request.setAttribute("contractId", contractId);
+        return "cargo/product/product-import";
+    }
+
+    /**
+     * 货物表格上传
+     */
+    @RequestMapping(path = "/import")
+    public String importExcel(MultipartFile file, String contractId) {
+
+        //根据上传文件的文件创建工作簿
+        try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
+            //获取工作表
+            Sheet sheet = workbook.getSheetAt(0);
+            //获取总行数
+            int totalRows = sheet.getPhysicalNumberOfRows();
+            //获取企业
+            String companyId = getLoginCompanyId();
+            String companyName = getLoginCompanyName();
+            //第一行是标题，从第二行开始遍历
+            for (int i = 1; i < totalRows; i++) {
+                //获取每一行
+                Row row = sheet.getRow(i);
+                //获取每一行的每一列,设置到对象属性中
+                ContractProduct contractProduct = new ContractProduct();
+                //空列(0)、生产厂家（1）、货号（2）、数量（3）、包装单位(PCS/SETS)（4）、
+                // 装率（5）、箱数（6）、单价（7）、货物描述（8）、 要求（9）
+                contractProduct.setFactoryName(row.getCell(1).getStringCellValue());
+                contractProduct.setProductNo(row.getCell(2).getStringCellValue());
+                contractProduct.setCnumber((int) row.getCell(3).getNumericCellValue());
+                contractProduct.setPackingUnit(row.getCell(4).getStringCellValue());
+                contractProduct.setLoadingRate(String.valueOf(row.getCell(5).getNumericCellValue()));
+                contractProduct.setBoxNum((int) row.getCell(6).getNumericCellValue());
+                contractProduct.setPrice(row.getCell(7).getNumericCellValue());
+                contractProduct.setProductDesc(row.getCell(8).getStringCellValue());
+                contractProduct.setProductRequest(row.getCell(9).getStringCellValue());
+                //设置购销合同信息
+                contractProduct.setContractId(contractId);
+                //设置企业信息
+                contractProduct.setCompanyId(companyId);
+                contractProduct.setCompanyName(companyName);
+                //设置工厂id
+                String factoryId = factoryService.findFactoryNameById(contractProduct.getFactoryName());
+                contractProduct.setFactoryId(factoryId);
+                //调用service保存货物信息
+                contractProductService.save(contractProduct);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "cargo/product/product-import";
+    }
 }

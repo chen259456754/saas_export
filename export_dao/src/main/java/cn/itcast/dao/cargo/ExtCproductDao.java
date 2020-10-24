@@ -1,7 +1,6 @@
 package cn.itcast.dao.cargo;
 
 import cn.itcast.domain.cargo.ExtCproduct;
-import cn.itcast.domain.cargo.ExtCproduct;
 import cn.itcast.domain.cargo.ExtCproductExample;
 
 import java.util.List;

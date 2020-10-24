@@ -2,6 +2,8 @@ package cn.itcast.dao.cargo;
 
 import cn.itcast.domain.cargo.ContractProduct;
 import cn.itcast.domain.cargo.ContractProductExample;
+import cn.itcast.vo.ContractProductVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,4 +23,6 @@ public interface ContractProductDao {
 
 	//更新
     int updateByPrimaryKeySelective(ContractProduct record);
+
+    List<ContractProductVo> findByShipTime(@Param("companyId") String companyId, @Param("inputDate") String inputDate);
 }

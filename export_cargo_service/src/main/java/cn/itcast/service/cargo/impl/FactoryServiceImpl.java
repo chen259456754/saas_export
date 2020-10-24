@@ -81,4 +81,20 @@ public class FactoryServiceImpl implements FactoryService {
     public void delete(String id) {
         factoryDao.deleteByPrimaryKey(id);
     }
+
+    /**
+     * 根据工厂名称查询id
+     *
+     * @param factoryName
+     * @return
+     */
+    @Override
+    public String findFactoryNameById(String factoryName) {
+        //构造条件：工厂名称
+        FactoryExample factoryExample = new FactoryExample();
+        FactoryExample.Criteria criteria = factoryExample.createCriteria();
+        criteria.andFactoryNameEqualTo(factoryName);
+        List<Factory> factoryList = factoryDao.selectByExample(factoryExample);
+        return factoryList != null && factoryList.size() > 0 ? factoryList.get(0).getId() : "";
+    }
 }

@@ -22,13 +22,30 @@
         <result column="company_id" jdbcType="VARCHAR" property="companyId"/>
         <result column="company_name" jdbcType="VARCHAR" property="companyName"/>
         <collection property="extCproducts" column="id" ofType="cn.itcast.domain.cargo.ExtCproduct"
-                    select="cn.itcast.dao.cargo.ExtCproductDao.findByProductId"></collection>
+                    select="cn.itcast.dao.cargo.ExtCproductDao.findByProductId">
+        </collection>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, contract_id, factory_id, factory_name, product_no, product_image,
-        product_desc, loading_rate, box_num, packing_unit, cnumber, out_number, finished,
-        product_request, price, amount, order_no, company_id, company_name
+        id,
+        contract_id,
+        factory_id,
+        factory_name,
+        product_no,
+        product_image,
+        product_desc,
+        loading_rate,
+        box_num,
+        packing_unit,
+        cnumber,
+        out_number,
+        finished,
+        product_request,
+        price,
+        amount,
+        order_no,
+        company_id,
+        company_name
     </sql>
 
     <sql id="Example_Where_Clause">
@@ -49,7 +66,8 @@
                                 </when>
                                 <when test="criterion.listValue">
                                     and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
                                         #{listItem}
                                     </foreach>
                                 </when>
@@ -61,15 +79,16 @@
         </where>
     </sql>
 
-    <select id="selectByExample" parameterType="cn.itcast.domain.cargo.ContractProductExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="cn.itcast.domain.cargo.ContractProductExample"
+            resultMap="BaseResultMap">
         select
         <if test="distinct">
             distinct
         </if>
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from co_contract_product
         <if test="_parameter != null">
-            <include refid="Example_Where_Clause" />
+            <include refid="Example_Where_Clause"/>
         </if>
         <if test="orderByClause != null">
             order by ${orderByClause}
@@ -78,12 +97,17 @@
 
     <!--根据id查询-->
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List"/> from co_contract_product where id = #{id}
+        select
+        <include refid="Base_Column_List"/>
+        from co_contract_product
+        where id = #{id}
     </select>
 
     <!--根据id删除-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-        delete from co_contract_product where id = #{id}
+        delete
+        from co_contract_product
+        where id = #{id}
     </delete>
 
     <!--保存-->
@@ -232,7 +256,7 @@
                 product_desc = #{productDesc,jdbcType=VARCHAR},
             </if>
             <if test="loadingRate != null">
-                 loading_rate = #{loadingRate,jdbcType=VARCHAR},
+                loading_rate = #{loadingRate,jdbcType=VARCHAR},
             </if>
             <if test="boxNum != null">
                 box_num = #{boxNum,jdbcType=DECIMAL},
@@ -271,5 +295,20 @@
         where id = #{id,jdbcType=VARCHAR}
     </update>
 
-
+    <select id="findByShipTime" resultType="cn.itcast.vo.ContractProductVo">
+        SELECT c.custom_name         customName,
+               c.contract_no         contractNo,
+               cp.product_no         productNo,
+               IFNULL(cp.cnumber, 0) cnumber,
+               cp.factory_name       factoryName,
+               c.delivery_period     deliveryPeriod,
+               c.ship_time           shipTime,
+               c.trade_terms         tradeTerms
+        FROM co_contract c,
+             co_contract_product cp
+        WHERE c.id = cp.contract_id
+          AND c.company_id = #{companyId}
+          AND DATE_FORMAT(c.ship_time
+                      , '%Y-%m') = #{inputDate}
+    </select>
 </mapper>

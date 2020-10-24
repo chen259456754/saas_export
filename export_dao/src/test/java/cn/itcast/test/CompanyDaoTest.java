@@ -4,7 +4,6 @@ import cn.itcast.dao.cargo.ContractDao;
 import cn.itcast.dao.company.CompanyDao;
 import cn.itcast.dao.system.DeptDao;
 import cn.itcast.domain.company.Company;
-import cn.itcast.domain.system.Dept;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring/applicationContext-dao.xml")

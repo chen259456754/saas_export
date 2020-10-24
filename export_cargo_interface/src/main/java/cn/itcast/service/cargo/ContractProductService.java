@@ -2,6 +2,7 @@ package cn.itcast.service.cargo;
 
 import cn.itcast.domain.cargo.ContractProduct;
 import cn.itcast.domain.cargo.ContractProductExample;
+import cn.itcast.vo.ContractProductVo;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -45,4 +46,13 @@ public interface ContractProductService {
      * 删除部门
      */
     void delete(String id);
+
+    /**
+     * 根据船期查询所有货物的数据
+     *
+     * @param companyId
+     * @param inputDate
+     * @return
+     */
+    List<ContractProductVo> findByShipTime(String companyId, String inputDate);
 }

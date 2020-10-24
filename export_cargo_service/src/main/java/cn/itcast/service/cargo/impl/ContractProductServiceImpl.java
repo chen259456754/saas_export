@@ -5,6 +5,7 @@ import cn.itcast.dao.cargo.ContractProductDao;
 import cn.itcast.dao.cargo.ExtCproductDao;
 import cn.itcast.domain.cargo.*;
 import cn.itcast.service.cargo.ContractProductService;
+import cn.itcast.vo.ContractProductVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -156,5 +157,17 @@ public class ContractProductServiceImpl implements ContractProductService {
         contractDao.updateByPrimaryKeySelective(contract);
         //删除该货物
         contractProductDao.deleteByPrimaryKey(id);
+    }
+
+    /**
+     * 根据船期查询所有货物的数据
+     *
+     * @param companyId
+     * @param inputDate
+     * @return
+     */
+    @Override
+    public List<ContractProductVo> findByShipTime(String companyId, String inputDate) {
+        return contractProductDao.findByShipTime(companyId, inputDate);
     }
 }
