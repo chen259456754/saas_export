@@ -32,6 +32,7 @@ public class ExportController extends BaseController {
     public String contractList(@RequestParam(defaultValue = "1") Integer pageNum,
                                @RequestParam(defaultValue = "5") Integer pageSize) {
         ContractExample contractExample = new ContractExample();
+        contractExample.setOrderByClause("create_time desc");
         ContractExample.Criteria criteria = contractExample.createCriteria();
         criteria.andCompanyIdEqualTo(getLoginCompanyId());
         //查询条件：状态为1 (已上报)
@@ -49,6 +50,7 @@ public class ExportController extends BaseController {
                        @RequestParam(defaultValue = "5") Integer pageSize) {
         String companyId = getLoginCompanyId();
         ExportExample exportExample = new ExportExample();
+        exportExample.setOrderByClause("create_time desc");
         ExportExample.Criteria criteria = exportExample.createCriteria();
         criteria.andCompanyIdEqualTo(companyId);
         PageInfo<Export> pageInfo = exportService.findByPage(exportExample, pageNum, pageSize);

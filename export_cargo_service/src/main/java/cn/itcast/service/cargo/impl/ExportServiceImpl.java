@@ -5,13 +5,10 @@ import cn.itcast.domain.cargo.*;
 import cn.itcast.service.cargo.ExportService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.commons.beanutils.converters.DateConverter;
 import org.apache.dubbo.config.annotation.DubboService;
+import org.springframework.beans.BeanUtils;
 
 import javax.annotation.Resource;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 @DubboService
@@ -53,12 +50,12 @@ public class ExportServiceImpl implements ExportService {
         String[] array = contractIds.split(",");
         for (String contractId : array) {
             Contract contract = contractDao.selectByPrimaryKey(contractId);
-            customerContract += contract.getContractNo()+" ";
+            customerContract += contract.getContractNo() + " ";
             contract.setState(2);
             contractDao.updateByPrimaryKeySelective(contract);
         }
         //设置报运单合同号
-        export.setContractIds(customerContract);
+        export.setCustomerContract(customerContract);
 
 
         // 根据购销购销合同ID集合，查询货物
@@ -76,12 +73,7 @@ public class ExportServiceImpl implements ExportService {
             // 创建报运商品对象
             ExportProduct ep = new ExportProduct();
             // 把货物对象属性，拷贝到商品中
-            try {
-                ConvertUtils.register(new DateConverter(null), java.util.Date.class);
-                BeanUtils.copyProperties(cp, ep);
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
+            BeanUtils.copyProperties(cp, ep);
             ep.setId(UUID.randomUUID().toString());
             ep.setExportId(export.getId());
             // 保存商品
@@ -99,12 +91,7 @@ public class ExportServiceImpl implements ExportService {
             // 创建报运商品附件对象
             ExtEproduct extEproduct = new ExtEproduct();
             // 对象拷贝
-            try {
-                ConvertUtils.register(new DateConverter(null), java.util.Date.class);
-                BeanUtils.copyProperties(extCproduct, extEproduct);
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
+            BeanUtils.copyProperties(extCproduct, extEproduct);
             // 设置商品附件属性：报运单id、报运商品
             extEproduct.setId(UUID.randomUUID().toString());
             extEproduct.setExportId(export.getId());
