@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="../base.jsp"%>
+<%@ include file="../base.jsp" %>
 <!DOCTYPE html>
 <html>
 
@@ -37,7 +37,13 @@
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
 
-    $.get('/stat/sellCharts.do').done(function (data) {
+    $.get('/stat/getSellData').done(function (data) {
+        var titles = [];
+        var values = [];
+        for (var i = 0; i < data.length; i++) {
+            titles[i] = data[i].name;
+            values[i] = data[i].value;
+        }
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(
             option = {
@@ -47,16 +53,16 @@
                 },
                 xAxis: {
                     type: 'category',
-                    data: data.title,
+                    data: titles,
                     axisLabel: {
-                        rotate:70
+                        rotate: 70
                     }
                 },
                 yAxis: {
                     type: 'value'
                 },
                 series: [{
-                    data: data.value,
+                    data: values,
                     type: 'bar'
                 }]
             }

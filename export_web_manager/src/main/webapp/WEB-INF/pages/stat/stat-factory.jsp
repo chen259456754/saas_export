@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="../base.jsp"%>
+<%@ include file="../base.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,27 +27,35 @@
 <script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
-
     // 指定图表的配置项和数据
-    $.get('/stat/factoryCharts.do').done(function (data) {
+    $.get('/stat/getFactoryData').done(function (data) {
+        var titles = [];
+        for (var i = 0; i < data.length; i++) {
+            titles[i] = data[i].name
+        }
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption({
-            title : {
-                text: '厂家销售统计',
-                subtext: '',
-                x:'center'
+            title: {
+                text: '生产厂家销售情况',
+                subtext: '统计销售金额',
+                x: 'center'
             },
-            tooltip : {
+            tooltip: {
                 trigger: 'item',
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
-            series : [
+            legend:{
+                orient: 'vertical',
+                left: 'left',
+                data: titles
+            },
+            series: [
                 {
                     name: '访问来源',
                     type: 'pie',
-                    radius : '55%',
-                    center: ['50%', '60%'],
-                    data:data,
+                    radius: '65%',
+                    center: ['70%', '60%'],
+                    data: data,
                     itemStyle: {
                         emphasis: {
                             shadowBlur: 10,
@@ -57,6 +65,7 @@
                     }
                 }
             ]
+
         })
     });
 </script>

@@ -38,7 +38,13 @@
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
     // 指定图表的配置项和数据
-    $.get('/stat/onlineCharts.do').done(function (data) {
+    $.get('/stat/online').done(function (data) {
+        var titles = [];
+        var values = [];
+        for (var i=0; i<data.length; i++){
+            titles[i] = data[i].name;
+            values[i] = data[i].value;
+        }
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(
             {
@@ -48,13 +54,13 @@
                 },
                 xAxis: {
                     type: 'category',
-                    data: data.title
+                    data: titles
                 },
                 yAxis: {
                     type: 'value'
                 },
                 series: [{
-                    data: data.value,
+                    data: values,
                     type: 'line'
                 }]
             }

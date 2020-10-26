@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.dao.stat.StatDao">
+    <!--统计生产厂家销量金额-->
+    <select id="getFactoryData" resultType="java.util.Map">
+        select p.factory_name name, sum(p.sum) value
+                from (
+        <!--货物中生产厂家的销售金额-->
+        select factory_name,
+               sum(amount) sum
+        from co_contract_product
+        where company_id = #{companyId}
+          and factory_name is not null
+        group by factory_name
+        union all
+        <!--附件中生产厂家的销售金额-->
+        select factory_name,
+               sum(amount) sum
+        from co_ext_cproduct
+        where company_id = #{companyId}
+          and factory_name is not null
+        group by factory_name
+                ) p
+                group by name
+    </select>
+
+    <!--获取商品销量排行数据-->
+    <select id="getSellData" resultType="java.util.Map">
+        SELECT a.name, a.value
+        FROM (
+                     SELECT product_no name, SUM(amount) value
+                     FROM co_contract_product
+                     WHERE company_id = #{param1,jdbcType=VARCHAR}
+                       and product_no is not null
+                     GROUP BY product_no
+                     ORDER BY SUM(amount) DESC
+                     ) a
+        LIMIT #{param2}
+    </select>
+    <!--按小时统计访问次数-->
+    <select id="online" resultType="java.util.Map">
+        select s.A1             name,
+               ifnull(p.num, 0) value
+        from st_online_info s
+                     left join (
+                select DATE_FORMAT(TIME, '%H') h,
+                       count(*)                num
+                from st_sys_log
+                group by h
+                ) p
+                on s.A1 = p.h
+    </select>
+</mapper>

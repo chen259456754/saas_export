@@ -2,6 +2,7 @@ package cn.itcast.service.cargo;
 
 import cn.itcast.domain.cargo.Export;
 import cn.itcast.domain.cargo.ExportExample;
+import cn.itcast.vo.ExportResult;
 import com.github.pagehelper.PageInfo;
 
 public interface ExportService {
@@ -14,4 +15,6 @@ public interface ExportService {
     void delete(String id);
 
     PageInfo<Export> findByPage(ExportExample exportExample, int pageNum, int pageSize);
+
+    void updateExport(ExportResult result);
 }

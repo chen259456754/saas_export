@@ -49,5 +49,5 @@
     <dubbo:registry protocol="zookeeper" address="127.0.0.1:2181" timeout="8000"/>
     <!--dubbo注解扫描-->
     <dubbo:annotation package="cn.itcast.web.controller"/>
-    <dubbo:consumer  timeout="7000"/>
+    <dubbo:consumer  timeout="7000" check="false"/>
 </beans>
