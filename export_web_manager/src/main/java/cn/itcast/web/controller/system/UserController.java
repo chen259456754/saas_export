@@ -9,6 +9,7 @@ import cn.itcast.service.system.UserService;
 import cn.itcast.web.controller.BaseController;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +30,8 @@ public class UserController extends BaseController {
     DeptService deptService;
     @Resource
     RoleService roleService;
+    @Resource
+    private RabbitTemplate rabbitTemplate;
 
     /**
      * 用户列表分页
@@ -76,6 +79,14 @@ public class UserController extends BaseController {
         user.setCompanyId(companyId);
         user.setCompanyName(companyName);
         if (StringUtil.isEmpty(user.getId())) {
+            /* 发送消息到消息容器（中指定的队列）*/
+            // 发送消息
+            Map<String, String> map = new HashMap<>();
+            map.put("email", user.getEmail());
+            map.put("title", "新员工入职提醒");
+            map.put("content", "欢迎你来到SaasExport大家庭，我们是一个由激情的团队！");
+            // 发送消息
+            rabbitTemplate.convertAndSend("myExchange", "msg.email", map);
             userService.save(user);
         } else {
             userService.update(user);

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--1. 创建任务类-->
+    <bean class="cn.itcast.web.task.MyTask" id="myTask"/>
+    <!--2. 创建任务工厂，注入任务类、指定任务方法-->
+    <bean class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean" id="jobDetail">
+        <property name="targetObject" ref="myTask"/>
+        <property name="targetMethod" value="excite"/>
+    </bean>
+    <!--3. 创建任务调度触发器，注入任务工厂、任务调度表达式(七子表达式)-->
+    <bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean" id="trigger">
+        <property name="jobDetail" ref="jobDetail"/>
+        <!--表达式： 秒 分钟  小时  日  月  周  年-->
+        <!--注意：日与周必须有一个是?问好-->
+        <!--0/5  每5秒执行-->
+        <!--0,1,2  第1秒、第2秒、第3秒执行-->
+        <property name="cronExpression" value="0/5 * * * * ?"/>
+    </bean>
+
+    <!--4. 创建任务执行计划(执行入口)-->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <array>
+                <!--注入任务执行触发器-->
+                <!--<ref bean="trigger"/>-->
+            </array>
+        </property>
+    </bean>
+</beans>

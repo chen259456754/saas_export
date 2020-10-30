@@ -166,10 +166,6 @@
                     <groupId>commons-beanutils</groupId>
                 </exclusion>
                 <exclusion>
-                    <artifactId>commons-collections</artifactId>
-                    <groupId>commons-collections</groupId>
-                </exclusion>
-                <exclusion>
                     <artifactId>olap4j</artifactId>
                     <groupId>org.olap4j</groupId>
                 </exclusion>
@@ -184,6 +180,12 @@
             <groupId>com.lowagie</groupId>
             <artifactId>itext</artifactId>
             <version>2.1.7</version>
+        </dependency>
+        <!--定时任务 -->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.2.3</version>
         </dependency>
     </dependencies>
 </project>
